@@ -79,7 +79,14 @@ void merge ()
   struct free_header * helper;
   for (; temp != NULL && temp->next != NULL; temp = temp->next)
   {
-    if (temp->addr + temp->len == temp->next->addr)
+    if (temp->len == 0)
+    {  // 出现了空白分区，和下一个进行合并
+      helper = temp->next;
+      temp->addr = helper->addr;
+      temp->len = helper->len;
+      temp->next = helper->next;
+      free(helper);
+    } else if (temp->addr + temp->len == temp->next->addr)
     {  // 可以合并的情况
       helper = temp->next;
       temp->len += helper->len;
@@ -216,7 +223,6 @@ int pmalloc (struct pro * node)
       int pos = temp->addr;
       temp->addr += node->mem;  // 移动初始地址
       temp->len -= node->mem;  // 改变分区长度
-      spin_unlock(&lock);
       return pos;
     }
   }
