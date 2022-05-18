@@ -1,13 +1,12 @@
-#define CHANNEL 4  // 多道机道数
-
 /**
  * 进程状态
  */
-enum pStatus {
-  pnew = 0,  // 新建
+enum pStatus 
+{
+  pnew = 0, // 后备
   pready,  // 就绪
-  prunning,  // 运行
   psuspend,  // 挂起
+  prunning,  // 运行
   pexit,  // 退出
 };
 
@@ -15,7 +14,8 @@ enum pStatus {
 /**
  * 进程结构体
  */
-struct pro {
+struct pro 
+{
   int pid;  // 进程号
   int need_time;  // 要求运行时间
   int priority;  // 优先权
@@ -24,4 +24,6 @@ struct pro {
   struct pro * suc;  // 进程后继
   struct pro * last;  // 前指针
   struct pro * next;  // 后指针
+  int ptr;  // 进程存储空间的入口
+  int mem;  // 存储空间的大小
 };
