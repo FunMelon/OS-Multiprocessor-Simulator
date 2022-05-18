@@ -107,7 +107,7 @@ void recycle (struct pro * node)
   }
   for (; temp != NULL && temp->next != NULL; temp = temp->next)
   {
-    if (temp->addr < node->ptr && temp->next->addr > node->ptr)
+    if (temp->addr <= node->ptr && temp->next->addr >= node->ptr)
     {  // 位于两个空白域之间
       break;
     }
